@@ -16,7 +16,7 @@ public class DataBaseHelper<T> {
 	private static final String USUARIO = "root";
 	private static final String CLAVE = "manu20";
 
-	public int modificarRegistro(String consultaSQL) throws ClassNotFoundException, SQLException{
+	public int modificarRegistro(String consultaSQL){
 
 		Connection conexion = null;
 		Statement sentencia = null;
@@ -28,10 +28,11 @@ public class DataBaseHelper<T> {
 			filasAfectadas = sentencia.executeUpdate(consultaSQL);
 		} catch (ClassNotFoundException e) {
 
-			System.out.println("Error driver" + e.getMessage());
+			System.out.println("Clase no encontrada " + e.getMessage());
+			throw new DataBaseException("Clase no encontrada",e);
 		} catch (SQLException e) {
 			System.out.println("Error de SQL" + e.getMessage());
-			throw e;
+			throw new DataBaseException("Error de SQL",e);
 		} finally {
 
 			if (sentencia != null) {
@@ -51,7 +52,7 @@ public class DataBaseHelper<T> {
 		return filasAfectadas;
 	}
 
-	public List<T> seleccionarRegistros(String consultaSQL, Class clase) throws ClassNotFoundException, SQLException{
+	public List<T> seleccionarRegistros(String consultaSQL, Class clase) throws DataBaseException{
 
 		Connection conexion = null;
 		Statement sentencia = null;
@@ -80,6 +81,7 @@ public class DataBaseHelper<T> {
 			}
 		} catch (Exception e) {
 			System.out.println("Error al seleccionar registros " + e);
+			throw new DataBaseException("Problema al cerrar statement",e);
 		}
 
 		finally {
@@ -87,14 +89,14 @@ public class DataBaseHelper<T> {
 				try {
 					sentencia.close();
 				} catch (SQLException e) {
-					throw e;
+					throw new DataBaseException("Problema al cerrar statement",e);
 				}
 			}
 			if (conexion != null) {
 				try {
 					conexion.close();
 				} catch (SQLException e) {
-					throw e;
+					throw new DataBaseException("Problema al cerrar connection",e);
 				}
 			}
 			return listaDeObjetos;
