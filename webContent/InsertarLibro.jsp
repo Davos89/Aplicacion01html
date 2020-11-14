@@ -11,11 +11,12 @@
 	String titulo = request.getParameter("titulo");
 	String categoria = request.getParameter("categoria");
 	
-	
+	try{
 	Libro libro= new Libro(isbn,titulo,categoria);
-	
 	libro.insertar();
-	
+	}catch(Exception e){%>
+		<%=e.getMessage() %>
+	<%}
 	response.sendRedirect("MostrarLibros.jsp");
 
 %>

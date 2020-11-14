@@ -49,7 +49,7 @@ public class Libro {
 		this.isbn = isbn;
 	}
 
-	public static List<String> buscarTodasLasCategorias() {
+	public static List<String> buscarTodasLasCategorias() throws ClassNotFoundException, SQLException {
 		String consultaSQL = "select distinct(categoria) as categoria from Libros";
 		DataBaseHelper<String> helper = new DataBaseHelper<String>();
 		List<String> listaDeCategorias = helper.seleccionarRegistros(consultaSQL, String.class);
@@ -57,28 +57,28 @@ public class Libro {
 		return listaDeCategorias;
 	}
 
-	public static Libro buscarPorClave(String isbn) {
+	public static Libro buscarPorClave(String isbn) throws ClassNotFoundException, SQLException {
 		String consultaSQL = "select isbn,titulo,categoria from Libros where isbn='" + isbn + "'";
 		DataBaseHelper<Libro> helper = new DataBaseHelper<Libro>();
 		List<Libro> listaDeLibros = helper.seleccionarRegistros(consultaSQL, Libro.class);
 		return listaDeLibros.get(0);
 	}
 
-	public static List<Libro> buscarPorCategoria(String categoria) {
+	public static List<Libro> buscarPorCategoria(String categoria) throws ClassNotFoundException, SQLException {
 		String consultaSQL = "select isbn,titulo,categoria from Libros where categoria='" + categoria + "'";
 		DataBaseHelper<Libro> helper = new DataBaseHelper<Libro>();
 		List<Libro> listaDeLibros = helper.seleccionarRegistros(consultaSQL, Libro.class);
 		return listaDeLibros;
 	}
 
-	public void insertar() {
+	public void insertar() throws ClassNotFoundException, SQLException {
 		String consultaSQL = "insert into Libros (isbn,titulo,categoria) values ";
 		consultaSQL += "('" + isbn + "','" + titulo + "','" + categoria + "')";
 		DataBaseHelper helper = new DataBaseHelper();
 		helper.modificarRegistro(consultaSQL);
 	}
 
-	public static List<Libro> buscarTodos() {
+	public static List<Libro> buscarTodos() throws ClassNotFoundException, SQLException {
 		String consultaSQL = "select isbn,titulo,categoria from Libros";
 		DataBaseHelper<Libro> helper = new DataBaseHelper<Libro>();
 		List<Libro> listaDeLibros = helper.seleccionarRegistros(consultaSQL, Libro.class);
@@ -86,13 +86,13 @@ public class Libro {
 		return listaDeLibros;
 	}
 
-	public void borrar() {
+	public void borrar() throws ClassNotFoundException, SQLException {
 		String consultaSQL = "delete from Libros where isbn='" + this.isbn + "'";
 		DataBaseHelper<Libro> helper = new DataBaseHelper<Libro>();
 		helper.modificarRegistro(consultaSQL);
 	}
 
-	public void salvar() {
+	public void salvar() throws ClassNotFoundException, SQLException {
 		String consultaSQL = "update Libros set titulo='" + this.titulo + "',categoria='" + categoria + "' where isbn='"
 				+ isbn + "'";
 		DataBaseHelper<Libro> helper = new DataBaseHelper<Libro>();
