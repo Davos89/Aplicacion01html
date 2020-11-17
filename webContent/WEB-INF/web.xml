@@ -16,4 +16,14 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
+	<servlet>
+		<description></description>
+		<display-name>ControladorLibros</display-name>
+		<servlet-name>ControladorLibros</servlet-name>
+		<servlet-class>com.davos.aplicacion.ControladorLibros</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ControladorLibros</servlet-name>
+		<url-pattern>/ControladorLibros</url-pattern>
+	</servlet-mapping>
 </web-app>
